@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+:root {
+  /* Swiss / Brutalist Palette */
+  --background: #F4F4F0; /* Paper / Off-white */
+  --concrete: #E5E5E5;   /* Raw Concrete */
+  --black: #000000;      /* Pure Black */
+  --ink: #111111;        /* Near Black Text */
+  
+  --accent: #FF4500;     /* Industrial Safety Orange */
+  
+  --border-width: 3px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-concrete: var(--concrete);
+  --color-black: var(--black);
+  --color-ink: var(--ink);
+  --color-accent: var(--accent);
+  
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Utilities */
+.border-b-thick {
+  border-bottom: var(--border-width) solid var(--black);
+}
+.border-t-thick {
+  border-top: var(--border-width) solid var(--black);
+}
+.border-l-thick {
+  border-left: var(--border-width) solid var(--black);
+}
+.border-r-thick {
+  border-right: var(--border-width) solid var(--black);
+}
+.border-thick {
+  border: var(--border-width) solid var(--black);
+}
+
+/* Hover Effect: The "Safety Orange" Flood */
+.hover-flood {
+  transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.hover-flood:hover {
+  background-color: var(--accent);
+  color: white;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 800; /* Extra Bold */
+  letter-spacing: -0.04em; /* Tight spacing for impact */
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+/* Smooth Inertial Scroll simulation (optional, browser native is usually best for performance) */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Cursor (Optional) */
+/* cursor-none class would be added to body if we implement custom cursor */
