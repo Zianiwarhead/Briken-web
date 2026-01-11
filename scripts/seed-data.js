@@ -254,12 +254,14 @@ fs.createReadStream(CSV_PATH)
     const { error: deleteError } = await supabase
       .from('products')
       .delete()
-      .neq('product_code', 'placeholder_for_delete_all'); // Deletes all rows where product_code is not this string
+      .filter('id', 'neq', '00000000-0000-0000-0000-000000000000'); // Standard hack to delete all rows
       
     if (deleteError) {
         console.error('Error clearing table:', deleteError);
-        // Continue anyway? Usually yes, to try and upsert/insert.
+        process.exit(1); // Stop if we can't clear, to avoid duplicates
     }
+
+    console.log('Database cleared.');
 
     console.log('Starting import...');
     // Process in chunks to avoid rate limits
