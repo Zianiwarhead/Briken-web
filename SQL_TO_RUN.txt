@@ -1,0 +1,17 @@
+-- Run this in your Supabase SQL Editor to fix the image visibility issues.
+
+-- 1. Make the 'products' bucket public
+update storage.buckets
+set public = true
+where id = 'products';
+
+-- 2. Allow public access to read files in the 'products' bucket
+create policy "Public Access"
+on storage.objects for select
+using ( bucket_id = 'products' );
+
+-- 3. (Optional) Allow authenticated uploads if not already set
+-- create policy "Authenticated Uploads"
+-- on storage.objects for insert
+-- to authenticated
+-- with check ( bucket_id = 'products' );

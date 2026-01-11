@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "*.sql": "postgres",
+    "supabase_schema.sql": "postgres"
+  }
+}
+

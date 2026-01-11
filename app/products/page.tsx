@@ -1,18 +1,32 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ProductCard from '@/components/ui/ProductCard';
-import { Filter } from 'lucide-react';
-import { PRODUCTS, CATEGORIES } from '@/lib/products';
+import { Filter, Loader2 } from 'lucide-react';
+import { CATEGORIES, fetchProducts, Product } from '@/lib/products';
 
 export default function ProductsPage() {
   const [activeCategory, setActiveCategory] = useState('All');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredProducts = activeCategory === 'All' 
-    ? PRODUCTS 
-    : PRODUCTS.filter(p => p.category === activeCategory);
+  useEffect(() => {
+    async function loadProducts() {
+      setLoading(true);
+      try {
+        const data = await fetchProducts(activeCategory);
+        setProducts(data);
+      } catch (error) {
+        console.error("Failed to load products", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadProducts();
+  }, [activeCategory]);
 
   return (
     <main className="min-h-screen bg-[#F4F4F0] pt-24 text-black">
@@ -39,7 +53,7 @@ export default function ProductsPage() {
                 <Filter size={18} />
                 <span>Index</span>
               </div>
-              <div className="space-y-0">
+              <div className="space-y-0 h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-black">
                 {CATEGORIES.map((cat) => (
                   <button
                     key={cat}
@@ -66,16 +80,24 @@ export default function ProductsPage() {
 
           {/* Product Grid */}
           <div className="flex-1">
-             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-             </div>
-             
-             {filteredProducts.length === 0 && (
-               <div className="py-20 text-center font-mono border-[3px] border-black border-dashed opacity-50">
-                 // NO ASSETS FOUND
+             {loading ? (
+               <div className="flex justify-center items-center h-64">
+                 <Loader2 className="animate-spin w-12 h-12" />
                </div>
+             ) : (
+               <>
+                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {products.map((product) => (
+                      <ProductCard key={product.id} product={product} />
+                    ))}
+                 </div>
+                 
+                 {products.length === 0 && (
+                   <div className="py-20 text-center font-mono border-[3px] border-black border-dashed opacity-50">
+                     NO ASSETS FOUND IN DATABASE
+                   </div>
+                 )}
+               </>
              )}
           </div>
 
