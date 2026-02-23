@@ -37,7 +37,7 @@ export function PageLoader() {
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-          className="w-16 h-16 border-[4px] border-black border-t-[#FF4500] rounded-full mx-auto mb-6"
+          className="w-16 h-16 border-4 border-black border-t-[#FF4500] rounded-full mx-auto mb-6"
         />
         <h2 className="text-2xl font-black uppercase tracking-widest mb-2">
           Briken.
