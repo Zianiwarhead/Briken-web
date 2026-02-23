@@ -1,15 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  /* Swiss / Brutalist Palette */
-  --background: #F4F4F0; /* Paper / Off-white */
-  --concrete: #E5E5E5;   /* Raw Concrete */
-  --black: #000000;      /* Pure Black */
-  --ink: #111111;        /* Near Black Text */
-  
-  --accent: #FF4500;     /* Industrial Safety Orange */
-  
-  --border-width: 3px;
+  --background: #F4F4F0;
+  --concrete: #E5E5E5;
+  --black: #000000;
+  --ink: #111111;
+  --accent: #FF4500;
+  --accent-hover: #FF6A33;
+  --success: #22C55E;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --border-width: 1px;
 }
 
 :root {
@@ -18,13 +19,15 @@
   --color-black: var(--black);
   --color-ink: var(--ink);
   --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
   
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-html, body, a, button, input, textarea, select {
-  cursor: none !important; /* Force custom cursor */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
 }
 
 body {
@@ -33,58 +36,76 @@ body {
   font-family: var(--font-sans);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   position: relative;
 }
 
-/* Grain Overlay */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9990;
-  opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
-/* Utilities */
-.border-b-thick {
-  border-bottom: var(--border-width) solid var(--black);
-}
-.border-t-thick {
-  border-top: var(--border-width) solid var(--black);
-}
-.border-l-thick {
-  border-left: var(--border-width) solid var(--black);
-}
-.border-r-thick {
-  border-right: var(--border-width) solid var(--black);
-}
-.border-thick {
-  border: var(--border-width) solid var(--black);
-}
-
-/* Hover Effect: The "Safety Orange" Flood */
-.hover-flood {
-  transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
-}
-.hover-flood:hover {
-  background-color: var(--accent);
-  color: white;
-}
-
-/* Typography */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 800; /* Extra Bold */
-  letter-spacing: -0.04em; /* Tight spacing for impact */
+  font-weight: 800;
+  letter-spacing: -0.04em;
   line-height: 0.9;
   text-transform: uppercase;
 }
 
-/* Smooth Inertial Scroll simulation (optional, browser native is usually best for performance) */
-html {
-  scroll-behavior: smooth;
+::selection {
+  background: var(--accent);
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--concrete);
+  border-left: 1px solid var(--black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--black);
+  border: 2px solid var(--concrete);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--black);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
 }

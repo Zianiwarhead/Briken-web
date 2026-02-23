@@ -33,7 +33,7 @@ export default function Cursor() {
   return (
     <>
       <motion.div
-        className="fixed top-0 left-0 w-4 h-4 rounded-full border border-black z-[9999] pointer-events-none mix-blend-difference bg-white"
+        className="fixed top-0 left-0 w-4 h-4 rounded-full border border-black z-9999 pointer-events-none mix-blend-difference bg-white"
         animate={{
           x: mousePosition.x - 8,
           y: mousePosition.y - 8,
@@ -50,12 +50,12 @@ export default function Cursor() {
       />
       {/* Crosshair Lines */}
        <motion.div
-        className="fixed top-0 left-0 w-full h-[1px] bg-black/10 z-[9998] pointer-events-none"
+        className="fixed top-0 left-0 w-full h-px bg-black/10 z-9998 pointer-events-none"
         animate={{ y: mousePosition.y }}
         transition={{ type: 'tween', ease: 'linear', duration: 0 }}
       />
       <motion.div
-        className="fixed top-0 left-0 h-full w-[1px] bg-black/10 z-[9998] pointer-events-none"
+        className="fixed top-0 left-0 h-full w-px bg-black/10 z-9998 pointer-events-none"
         animate={{ x: mousePosition.x }}
         transition={{ type: 'tween', ease: 'linear', duration: 0 }}
       />
